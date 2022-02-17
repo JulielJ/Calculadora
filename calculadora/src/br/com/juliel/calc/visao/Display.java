@@ -9,14 +9,21 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import br.com.juliel.calc.modelo.Memoria;
+import br.com.juliel.calc.modelo.MemoriaObservador;
+
 @SuppressWarnings("serial")
-public class Display extends JPanel {
+public class Display extends JPanel implements MemoriaObservador {
 	
 	private JLabel label ;
 	
+	
+	
 	public Display() {
+		Memoria.getInstancia().adicionarObservador(this);
+		
 		setBackground(new Color(49, 49, 49));
-		label = new JLabel("1234,56");
+		label = new JLabel(Memoria.getInstancia().getTextoAtual());
 		label.setForeground(Color.WHITE);
 		label.setFont(new Font("Courier", Font.PLAIN, 30));
 		
@@ -24,6 +31,9 @@ public class Display extends JPanel {
 		
 		add(label);
 		
-		
+	}
+	@Override
+	public void valorAlterado(String novoValor) {
+		label.setText(novoValor);
 	}
 }

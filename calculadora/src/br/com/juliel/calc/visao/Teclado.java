@@ -1,11 +1,16 @@
 package br.com.juliel.calc.visao;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import br.com.juliel.calc.modelo.Memoria;
+
 @SuppressWarnings("serial")
-public class Teclado extends JPanel {
+public class Teclado extends JPanel implements ActionListener{
 	
 	private final Color COR_CINZA_ESCURO = new Color(68,68,68);
 	private final Color COR_CINZA_CLARO = new Color(99,99,99);
@@ -56,7 +61,7 @@ public class Teclado extends JPanel {
 		c.gridwidth = 1;
 		adicionarBotao(",",COR_CINZA_CLARO, c, 2, 4);
 		adicionarBotao("=",COR_LARANJA, c, 3, 4);
-		
+	/*	
 		c.gridy = 1;
 		c.gridx = 0;
 		add(new Botao("7", COR_CINZA_CLARO), c);
@@ -78,6 +83,7 @@ public class Teclado extends JPanel {
 		add(new Botao("8", COR_CINZA_CLARO), c);
 		add(new Botao("9", COR_CINZA_CLARO), c);
 		add(new Botao("*", COR_LARANJA), c);
+		*/
 	}
 
 	private void adicionarBotao(String texto, Color cor, 
@@ -85,6 +91,14 @@ public class Teclado extends JPanel {
 		c.gridx = x;
 		c.gridy = y;
 		Botao botao = new Botao(texto, cor);
+		botao.addActionListener(this);
+		
 		add(botao, c);
+	}
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() instanceof JButton) {
+		JButton botao = (JButton) e.getSource();
+		Memoria.getInstancia().processarComando(botao.getText());
+		}
 	}
 }
